@@ -1,6 +1,8 @@
-import { Body, Controller, Get, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { UserServices } from './user.service';
 import CreateUserDto from './dto/create-user.dto';
+import UpdateUserDto from './dto/update-user.dto';
+import DeleteUserDto from './dto/delete-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -22,5 +24,15 @@ export class UserController {
   @Get('books')
   getBooks( @Body('userID', ParseIntPipe) userID: number ) {
     return this.usersServices.getBooksOfUser(userID);
+  }
+
+  @Put('update')
+  updateName( @Body() user: UpdateUserDto ){
+    return this.usersServices.update(user);
+  }
+
+  @Delete('delete')
+  deleteUser( @Body() user: DeleteUserDto ){
+    return this.usersServices.delete(user);
   }
 }
